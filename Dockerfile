@@ -15,7 +15,7 @@ RUN apt-get update && \
 # Install maven
     apt-get install -qy maven && \
 # Install Docker
-    apt-get install -qy docker
+    apt-get install -qy docker && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
