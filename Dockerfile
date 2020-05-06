@@ -16,6 +16,8 @@ RUN apt-get update && \
     apt-get install -qy maven && \
 # Install Docker
     apt-get install -qy docker && \
+    service docker start && \
+    docker run hello-world && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
