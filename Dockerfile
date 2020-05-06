@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 LABEL maintainer="Adam Pantak-Ripoll <apantak@gmail.com>"
-USER ROOT
+
 # Make sure the package repository is up to date.
 RUN apt-get update && \
     apt-get -qy full-upgrade && \
