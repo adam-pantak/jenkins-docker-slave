@@ -1,7 +1,7 @@
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
 LABEL maintainer="Adam Pantak-Ripoll <apantak@gmail.com>"
-
+USER ROOT
 # Make sure the package repository is up to date.
 RUN apt-get update && \
     apt-get -qy full-upgrade && \
@@ -15,12 +15,10 @@ RUN apt-get update && \
 # Install maven
     apt-get install -qy maven && \
 # Install node
-    apt-get install git-core curl build-essential openssl libssl-dev \
-     && git clone https://github.com/nodejs/node.git \
-     && cd node \
-     && ./configure \
-     && make \
-     && sudo make install && \
+    apt-get -y install curl gnupg && \
+    curl -sL https://deb.nodesource.com/setup_11.x  | bash - && \
+    apt-get -y install nodejs && \
+    npm install && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
