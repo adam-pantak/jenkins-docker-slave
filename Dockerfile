@@ -15,9 +15,12 @@ RUN apt-get update && \
 # Install maven
     apt-get install -qy maven && \
 # Install node
-    apt-get install -qy nodejs && \
-# Install Docker
-    apt-get install -qy docker && \
+    apt-get install git-core curl build-essential openssl libssl-dev \
+     && git clone https://github.com/nodejs/node.git \
+     && cd node \
+     && ./configure \
+     && make \
+     && sudo make install && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
@@ -25,7 +28,6 @@ RUN apt-get update && \
 # Set password for the jenkins user (you may want to alter this).
     echo "jenkins:jenkins" | chpasswd && \
     mkdir /home/jenkins/.m2
-
 #ADD settings.xml /home/jenkins/.m2/
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
