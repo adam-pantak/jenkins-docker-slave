@@ -1,7 +1,8 @@
 FROM ubuntu:latest
+FROM node:latest
 
 LABEL maintainer="Adam Pantak-Ripoll <apantak@gmail.com>"
-
+ENV DEBIAN_FRONTEND noninteractive
 # Make sure the package repository is up to date.
 RUN apt-get update && \
     apt-get -qy full-upgrade && \
@@ -14,11 +15,6 @@ RUN apt-get update && \
     apt-get install -qy openjdk-8-jdk && \
 # Install maven
     apt-get install -qy maven && \
-# Install node
-    apt-get -y install curl gnupg && \
-    curl -sL https://deb.nodesource.com/setup_11.x  | bash - && \
-    apt-get -y install nodejs && \
-    npm install && \
 # Cleanup old packages
     apt-get -qy autoremove && \
 # Add user jenkins to the image
@@ -29,6 +25,8 @@ RUN apt-get update && \
 #ADD settings.xml /home/jenkins/.m2/
 # Copy authorized keys
 COPY .ssh/authorized_keys /home/jenkins/.ssh/authorized_keys
+
+RUN nodejs --version
 
 RUN chown -R jenkins:jenkins /home/jenkins/.m2/ && \
     chown -R jenkins:jenkins /home/jenkins/.ssh/
